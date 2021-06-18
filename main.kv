@@ -1,0 +1,523 @@
+#:kivy 1.11
+#:import utils kivy.utils
+#:include uix/kv/homescreen.kv
+#:include uix/kv/surveyscreen.kv
+#:include uix/kv/createscreen.kv
+#:include uix/kv/questionlist.kv
+#:include uix/kv/takesurvey.kv
+
+
+<MainScreen>:
+    id: main_screen
+
+    MainControl:
+        id: main_control
+        name: "main"
+
+    QuestionList:
+        id: question_list
+        name: "list"
+
+    TakeSurvey:
+        id: take_survey
+        name: "take"
+
+    CreateScreen:
+        id: create_screen
+        name: "create"
+
+
+<AccountScreen>:
+    FloatLayout:
+        canvas:
+            Color:
+                rgb: utils.get_color_from_hex("#d4d3f2")
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+<AssessScreen>:
+	FloatLayout:
+		canvas:
+			Color:
+				rgb: utils.get_color_from_hex("#d4d3f2")
+			Rectangle:
+				size: self.size
+				pos: self.pos
+
+<SettingsScreen>:
+    FloatLayout:
+        canvas:
+            Color:
+                rgb: utils.get_color_from_hex("#d5d6fa")
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+
+<MainControl>:
+	id: maincontrol
+	name: "main_control"
+
+	ScreenManaga:
+		id: screenmanage
+		size_hint: 1, 0.92
+        HomeScreen:
+            id: home_screen
+            name: "Home"
+        AccountScreen:
+            id: account_screen
+            name: "Account"
+        AssessScreen:
+            id: assess_screen
+            name: "Assess"
+        SettingsScreen:
+            id: settings_screen
+            name: "Settings"
+        SurveyScreen:
+            id: survey_screen
+            name: "Survey"
+
+    NavigationBar:
+        id: navbar
+        size_hint: 1, 0.065
+        canvas.before:
+            Color:
+                rgb: utils.get_color_from_hex("#c1c1c1")
+            RoundedRectangle:
+                size: self.size[0], self.size[1]+dp(2)
+                pos: self.pos[0], self.pos[1]-dp(1.5)
+                radius: 0, 0, 7, 7
+
+        ImageButton:
+            id: Home
+            group: "navbuttons"
+            size_hint: 0.6, 0.6
+            source: "data/images/home_off.png" if screenmanage.current != "Home" else "data/images/home_on.png"
+            on_press: screenmanage.current = 'Home'
+
+        ImageButton:
+            id: report
+            group: "navbuttons"
+            size_hint: 0.55, 0.55
+            source: "data/images/assessment_off.png" if screenmanage.current != "Assess" else "data/images/assessment_on.png"
+            on_press: screenmanage.current = 'Assess'
+
+        ImageButton:
+            id: Survey
+            group: "navbuttons"
+            size_hint: 0.55, 0.55
+            source: "data/images/survey_off.png" if screenmanage.current != "Survey" else "data/images/survey_on.png"
+            on_press: screenmanage.current = 'Survey'
+
+        ImageButton:
+            id: Account
+            group: "navbuttons"
+            size_hint: 0.6, 0.6
+            source: "data/images/person_off.png" if screenmanage.current != "Account" else "data/images/person_on.png"
+            on_press: screenmanage.current = 'Account'
+
+<SurvImage@ButtonBehavior+Image>:
+    size_hint: 0.5, 0.5
+
+<SurvButton@ButtonBehavior+Label>:
+    font_size: sp(12)
+    color: utils.get_color_from_hex("#000000")
+    text_size:self.size
+    halign: "right"
+    valign: "middle"
+
+<Toast>:
+    size_hint:None,None
+    y:'-50dp'
+    size: '300dp','40dp'
+    anchor_x:'right'
+    canvas:
+        Color:
+            rgb: utils.get_color_from_hex("#007bae")
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: 10,10,10,10
+    Label:
+        id:label
+        font_size: '15sp'
+
+    AnchorLayout:
+        size_hint:None, None
+        size:'48dp','48dp'
+        anchor_x:'center'
+        Button:
+            size_hint:None, None
+            size:'24dp', '24dp'
+            border:0,0,0,0
+            background_normal:'data/images/but_del.png'
+            background_down:'data/images/but_del_down.png'
+            on_release:root.exit(None)
+
+<Multichoice>:
+    id: multi_choice
+    text: answer.text
+    answer: answer
+    opt_remove: opt_remove
+    orientation: "horizontal"
+    size_hint_y: None
+    height: self.minimum_height
+    spacing: "16dp"
+    SurvImage:
+        id: opt_remove
+        source: "data/images/checkmark.png"
+        size_hint: 0.1, 0.5
+    QuesInput:
+        id: answer
+        text: root.text
+        hint_text: "Option"
+    SurvImage:
+        id: opt_remove
+        source: "data/images/remove.png"
+        size_hint: 0.1, 0.5
+        on_release:
+            root.answer.text = ''
+            root.remove_widget(root.answer)
+
+<QuestionChoice>:
+    id: question_choice
+    text: answer.text
+    answer: answer
+    opt_remove: opt_remove
+    orientation: "horizontal"
+    size_hint_y: None
+    height: self.minimum_height
+    spacing: "16dp"
+    Label:
+        id: opt_remove
+        size_hint: 0.01, 0.5
+    QuesInput:
+        id: answer
+        text: root.text
+        hint_text: "Question"
+    SurvImage:
+        id: opt_remove
+        source: "data/images/remove.png"
+        size_hint: 0.1, 0.5
+        on_release:
+            root.answer.text = ''
+            root.remove_widget(root.answer)
+
+<AnsInput>:
+    id: ans_input
+    orientation: "lr-tb"
+    size_hint_y: None
+    height: self.minimum_height
+
+<LikertQueInput@StackLayout>:
+    id: ans_input
+    orientation: "lr-tb"
+    size_hint_y: None
+    height: self.minimum_height
+
+<BaseInput@TextInput>:
+    background_normal:'data/images/textinput.png'
+    background_active:'data/images/textinput.png'
+    background_disabled_normal:'data/images/textinput.png'
+    background_disabled_active:'data/images/textinput.png'
+    font_size: sp(15)
+    cursor_color: 0.498, 0.549, 0.552,1.0
+    foreground_color: 0.204, 0.286, 0.369, 1.0
+    selection_color: 0.925, 0.941, 0.937, 0.5
+    padding: dp(16), dp(8)
+    halign:'left'
+    border: 10,10,10,10
+
+
+<QuesInput>:
+    text:''
+    id: inp_idea
+    hint_text: "Question"
+    orientation: "lr-tb"
+    size_hint_y: None
+    height: self.minimum_height
+    password: False
+    bg_color: (1,1,1,1)
+    highlight_color1: 0.498, 0.549, 0.552,1.0
+    highlight_color2: (0.2039,0.5961,0.8588,1)
+    highlight_color3: (1, 0.2, 0, 1)
+
+    canvas.before:
+        Color:
+            rgba: self.bg_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BaseInput:
+        text: root.text
+        id: the_text_input
+        hint_text: root.hint_text if not self.focused else ""
+        size_hint_y: None
+        height: dp(50)
+        padding: dp(8), dp(14)
+        bottom_color: root.highlight_color1
+        pos_hint: {"top": 1, "right": 1}
+
+        canvas.before:
+            Color:
+                rgba: self.bottom_color if self.bottom_color else (0,0,0,1)
+            Rectangle:
+                size: (self.size[0], self.size[1]/15) if self.focused else (self.size[0], self.size[1]/20.)
+                pos: self.pos
+
+        on_focus:
+            root.highlight_color1 = 0.498, 0.549, 0.552,1.0
+            self.bottom_color = root.highlight_color2 if self.focused else root.highlight_color1
+
+        on_text:
+            root.text = self.text
+
+<OtherInput@StackLayout>:
+    text:''
+    id: inp_idea
+    hint_text: "Question"
+    orientation: "lr-tb"
+    size_hint_y: None
+    height: self.minimum_height
+    password: False
+    bg_color: (1,1,1,1)
+    highlight_color1: 0.498, 0.549, 0.552,1.0
+    highlight_color2: (0.2039,0.5961,0.8588,1)
+    highlight_color3: (1, 0.2, 0, 1)
+
+    canvas.before:
+        Color:
+            rgba: self.bg_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BaseInput:
+        text: root.text
+        id: the_text_input
+        hint_text: root.hint_text if not self.focused else ""
+        size_hint_y: None
+        height: dp(20)
+        padding: dp(0), dp(0)
+        bottom_color: root.highlight_color1
+        pos_hint: {"top": 1, "right": 1}
+
+        canvas.before:
+            Color:
+                rgba: self.bottom_color if self.bottom_color else (0,0,0,1)
+            Rectangle:
+                size: (self.size[0], self.size[1]/15) if self.focused else (self.size[0], self.size[1]/20.)
+                pos: self.pos
+
+        on_focus:
+            root.highlight_color1 = 0.498, 0.549, 0.552,1.0
+            self.bottom_color = root.highlight_color2 if self.focused else root.highlight_color1
+
+        on_text:
+            root.text = self.text
+<EveryWidget>:
+    id:every_widget
+    do_scroll_x: False
+    BoxLayout:
+        id:container
+        size_hint_y:None
+        size_hint_x: 0.8
+        height:self.minimum_height
+        orientation:'vertical'
+        padding: dp(16)
+        spacing: dp(16)
+        
+
+<SolWidget>:
+    id: sol_widget
+    add_option : add_option
+    orientation:'lr-tb'
+    padding: dp(16)
+    spacing: dp(8)
+    size_hint_y: None
+    height: self.minimum_height
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1.0
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: 10,10,10,10
+    QuesInput:
+        id:inp_idea
+
+
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint_y:None
+        height: self.minimum_height
+        canvas:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            id: option_type
+            text: "Questionnaire Type"
+            color: 0.498, 0.549, 0.552,1.0
+            size_hint_y: None
+            height: inp_idea.height
+            text_size: self.size
+            halign: "left"
+            valign: "middle"
+        Label:
+            text: "[color=#74b9ff]Hide Options[/color]"
+            markup: True
+            color: 0.498, 0.549, 0.552,1.0
+            size_hint_y: None
+            height: inp_idea.height
+            text_size: self.size
+            halign: "right"
+            valign: "middle"
+    AnsInput:
+        id: ans_input
+    BoxLayout:
+        size_hint: None, None
+        height: self.minimum_height
+        width: inp_idea.width
+
+        Button:
+            id: add_option
+            text: "Add Option"
+            size_hint: 0.12, None
+            height: dp(35)
+            background_normal: "data/images/addbtn.png"
+            background_down: "data/images/addab.png"
+            border: 20,20,20,20
+            on_release:
+                root.dispatch('on_add_option')
+
+        Label:
+            text: "required"
+            size_hint: None, None
+            height: add_option.height
+            width: self.parent.width - add_option.width - required.width
+            padding: dp(16), dp(0)
+            color: 0.498, 0.549, 0.552,1.0
+            text_size: self.size
+            halign: "right"
+            valign: "middle"
+
+        Switch:
+            id: required
+            size_hint: 0.1, None
+            height: add_option.height
+            active: False
+
+    BoxLayout:
+        id: other_box
+        orientation: "horizontal"
+        size_hint_y:None
+        height: self.minimum_height
+
+        Label:
+            text: "Add 'other' as an Option"
+            size_hint: None, None
+            height: dp(45)
+            width: self.parent.width - other.width
+            padding: dp(16), dp(0)
+            color: 0.498, 0.549, 0.552,1.0
+            text_size: self.size
+            halign: "right"
+            valign: "middle"
+
+        Switch:
+            id: other
+            size_hint: 0.1, None
+            height: add_option.height
+            active: False
+
+<LikertScale>:
+    id: likert_scale
+    add_option : add_option
+    orientation:'lr-tb'
+    padding: dp(16)
+    spacing: dp(8)
+    size_hint_y:None
+    height: self.minimum_height
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1.0
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: 10,10,10,10
+    LikertQueInput:
+        id: likertque_input
+
+
+    BoxLayout:
+        size_hint: None, None
+        height: self.minimum_height
+        width: likertque_input.width
+
+        Button:
+            id: add_option
+            text: "Add Question"
+            size_hint: 0.12, None
+            height: dp(35)
+            background_normal: "data/images/addbtn.png"
+            background_down: "data/images/addab.png"
+            border: 20,20,20,20
+            on_release:
+                root.dispatch('on_add_question')
+
+        Label:
+            text: ""
+            size_hint: 0.55, 0.5
+            halign: "right"
+            valign: "middle"
+
+        Label:
+            id: option_type
+            text: "Questionnaire Type"
+            color: 0.498, 0.549, 0.552,1.0
+            size_hint_y: None
+            size_hint_x: 0.15
+            height: dp(35)
+            text_size: self.size
+            halign: "right"
+            valign: "middle"
+    AnsInput:
+        id: ans_input
+
+    BoxLayout:
+        size_hint: None, None
+        height: self.minimum_height
+        width: likertque_input.width
+
+        Button:
+            id: add_option
+            text: "Add Option"
+            size_hint: 0.12, None
+            height: dp(35)
+            background_normal: "data/images/addbtn.png"
+            background_down: "data/images/addab.png"
+            border: 20,20,20,20
+            on_release:
+                root.dispatch('on_add_likert_option')
+
+        Label:
+            text: "required"
+            size_hint: None, None
+            height: add_option.height
+            width: self.parent.width - add_option.width - required.width
+            padding: dp(16), dp(0)
+            color: 0.498, 0.549, 0.552,1.0
+            text_size: self.size
+            halign: "right"
+            valign: "middle"
+
+        Switch:
+            id: required
+            size_hint: 0.1, None
+            height: add_option.height
+            active: False

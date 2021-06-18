@@ -1,0 +1,199 @@
+#:kivy 1.11
+#:import Factory kivy.factory.Factory
+
+
+<CustomDropDown>:
+    Button:
+        text: 'My first Item'
+        size_hint_y: None
+        size_hint_x: None
+        width: dp(400)
+        height: 44
+        on_release: print('no')
+    Label:
+        text: 'Unselectable item'
+        size_hint_y: None
+        size_hint_x: None
+        width: dp(400)
+        height: 44
+    Button:
+        text: 'My second Item'
+        size_hint_y: None
+        size_hint_x: None
+        width: dp(400)
+        height: 44
+        on_release: print('YES')
+
+<ProjectItem>:
+    id: project_item
+    orientation: "lr-tb"
+    size_hint_y: None
+    height: dp(50)
+    padding: "16dp"
+    spacing: "16dp"
+    swipe_rectangle: self.x, self.y , self.width, self.height
+    swipe_timeout: 100000000000000
+    swipe_distance: 1
+    left_percentage: 50
+    on_left_event_after_swipe: app.del_project(root.index)
+
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1.0
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: 10,10,10,10
+
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint_y: None
+        height: self.minimum_height
+        padding: 3
+
+        Label:
+            text: root.title
+            font_size: '15sp'
+            text_size: self.size
+            size_hint: 1, 1
+            halign: 'left'
+            markup: True
+            color: 0,0,0,1
+
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint_y: None
+        height: dp(30)
+        padding: 3
+        Button:
+            id: take_survey
+            text: "Take a Survey"
+            size_hint: 0.3, None
+            height: dp(30)
+            background_normal: "data/images/addbtn.png"
+            background_down: "data/images/addab.png"
+            border: 15,15,15,15
+            on_release:
+                app.take_survey(root.index)
+                app.root.ids.take_survey.answers_json(root.title)
+                root.ids.export_data.opacity = 1
+        Label:
+            text: ''
+            size_hint: 0.2, None
+            height: take_survey.height
+            padding: dp(16), dp(0)
+            color: 0.498, 0.549, 0.552,1.0
+            text_size: self.size
+            halign: "right"
+            valign: "middle"
+
+        Button:
+            id: export_data
+            text: "Export Data"
+            size_hint: 0.2, None
+            height: dp(30)
+            opacity: 0
+            background_normal: "data/images/addbtn.png"
+            background_down: "data/images/addab.png"
+            border: 15,15,15,15
+            on_release:
+                app.export_data(root.title)
+
+
+        Label:
+            text: ''
+            size_hint: 0.2, None
+            height: edit_survey.height
+            padding: dp(16), dp(0)
+            color: 0.498, 0.549, 0.552,1.0
+            text_size: self.size
+            halign: "right"
+            valign: "middle"
+
+        Button:
+            id: edit_survey
+            text: "Edit your Survey"
+            size_hint: 0.3, None
+            height: dp(30)
+            background_normal: "data/images/addbtn.png"
+            background_down: "data/images/addab.png"
+            border: 15,15,15,15
+            on_release:
+                app.edit_survey(root.index)
+
+        SurvImage:
+            id: three_dot
+            source: "data/images/three_dot.png"
+            size_hint: 0.1, 0.5
+            on_release:
+                root.open()
+
+
+<SurveyScreen>:
+    id: survey_screen
+    FloatLayout:
+        BoxLayout:
+            padding: dp(16), dp(16), dp(16), dp(0)
+            spacing: dp(8)
+            orientation: "vertical"
+            canvas:
+                Color:
+                    rgb: utils.get_color_from_hex("#d4d3f2")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+
+            RecycleView:
+                data: app.view.data_for_widgets
+                viewclass: 'ProjectItem'
+                RecycleBoxLayout:
+                    default_size: None, dp(80)
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+                    orientation: 'vertical'
+                    spacing: dp(3)
+
+            BoxLayout:
+                size_hint: 1, 0.0005
+                padding: dp(16)
+                Label:
+                    text: ''
+                    size_hint: 0.35, None
+                    height: add_option.height
+                    padding: dp(16), dp(0)
+                    color: 0.498, 0.549, 0.552,1.0
+                    text_size: self.size
+                    halign: "right"
+                    valign: "middle"
+
+                Button:
+                    id: add_option
+                    text: "CREATE YOUR SURVEY"
+                    size_hint: 0.2, None
+                    height: dp(35)
+                    background_normal: "data/images/addbtn.png"
+                    background_down: "data/images/addab.png"
+                    border: 15,15,15,15
+                    on_release:
+                        app.add_project()
+                        app.root.current = 'list'
+
+
+
+                Label:
+                    text: ''
+                    size_hint: 0.35, None
+                    height: add_option.height
+                    padding: dp(16), dp(0)
+                    color: 0.498, 0.549, 0.552,1.0
+                    text_size: self.size
+                    halign: "right"
+                    valign: "middle"
+
+        Toast:
+            id:toast
+            width: min(root.width - dp(32), dp(250))
+            x:root.center_x - self.width // 2
+

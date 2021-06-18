@@ -1,0 +1,73 @@
+#:kivy 1.11
+<CreateScreen>:
+
+
+    padding: dp(16), dp(24)
+    canvas:
+        Color:
+            rgb: utils.get_color_from_hex("#d4d3f2")
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    ScrollView:
+        do_scroll_x: False
+        size_hint_x: 1
+
+        BoxLayout:
+            id: scroll_opt
+            orientation: 'vertical'
+            spacing: dp(5)
+            size_hint_y: None
+            height: self.minimum_height
+
+            SolWidget:
+                id: sol_widget
+                size_hint_x: 1
+                on_add_option: root.add_ans_input()
+
+            LikertScale:
+                id: likert_scale
+                size_hint_x: 1
+                on_add_likert_option: root.add_likert_input()
+                on_add_question: root.add_ans_question()
+
+            
+    BoxLayout:
+        size_hint: 1, 0.1
+        padding: dp(16)
+        Button:
+            id: save
+            text: "Save"
+            size_hint: 0.2, None
+            height: dp(40)
+            background_normal: "data/images/addbtn.png"
+            background_down: "data/images/addab.png"
+            border: 15,15,15,15
+            on_release:
+                app.root.ids.question_list.remove_optioncard()
+                app.post_survey()
+
+
+
+
+        Label:
+            text: ''
+            size_hint: 0.55, None
+            height: save.height
+            padding: dp(16), dp(0)
+            color: 0.498, 0.549, 0.552,1.0
+            text_size: self.size
+            halign: "right"
+            valign: "middle"
+
+        Button:
+            id: cancel_option
+            text: "Cancel"
+            size_hint: 0.2, None
+            height: dp(40)
+            background_normal: "data/images/addbtn.png"
+            background_down: "data/images/addab.png"
+            border: 15,15,15,15
+            on_release:
+                app.cancel()
+

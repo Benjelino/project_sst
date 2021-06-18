@@ -1,0 +1,144 @@
+<HomeScreen>:
+	BoxLayout:
+        orientation: 'vertical'
+        spacing: dp(10)
+		canvas:
+			Color:
+				rgb: utils.get_color_from_hex("#d4d3f2")
+			Rectangle:
+				size: self.size
+				pos: self.pos
+        GridLayout:
+            rows: 5
+            size_hint_y: None
+            height: self.parent.height / 2.9
+            canvas.before:
+                Color:
+                    rgb: utils.get_color_from_hex("#111111")
+                RoundedRectangle:
+                    size: self.size[0], self.size[1]+dp(3)
+                    pos: self.pos[0], self.pos[1]-dp(2)
+                    radius: 0, 0, 7, 7
+            canvas.before:
+                Color:
+                    rgb: utils.get_color_from_hex("#C1C1C1")
+                RoundedRectangle:
+                    size: self.size[0], self.size[1]+dp(1.5)
+                    pos: self.pos[0], self.pos[1]-dp(1.5)
+                    radius: 0, 0, 7, 7
+            canvas:
+    			Color:
+    				rgb: utils.get_color_from_hex("#3598db")
+    			RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: 0, 0, 7, 7
+        Label:
+            text: 'Pending Surveys'
+            font_size: sp(12)
+            padding_x: dp(15)
+            size_hint: None, None
+            color: utils.get_color_from_hex("#000000")
+            size: self.texture_size
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, None
+            height: self.parent.height / 3.8
+            ScrollView:
+                do_scroll_y: False
+                bar_color: utils.get_color_from_hex("#d4d3f2")
+                bar_inactive_color: utils.get_color_from_hex("#d4d3f2")
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_x: None
+                    width: self.minimum_width
+                    padding: dp(7), dp(5), dp(5), dp(5)
+                    spacing: dp(7)
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint: None, None
+                        size: dp(300), self.parent.parent.height - dp(10)
+                        canvas.before:
+                            Color:
+                                rgb: utils.get_color_from_hex("#C1C1C1")
+                            RoundedRectangle:
+                                size: self.size[0]+dp(2), self.size[1]+dp(3)
+                                pos: self.pos[0]-dp(1), self.pos[1]-dp(1.5)
+                                radius: 7, 7, 7, 7
+                        canvas:
+                            Color:
+                                rgb: utils.get_color_from_hex("#ffffff")
+                            RoundedRectangle:
+                                size: self.size
+                                pos: self.pos
+                                radius: 7, 7, 7, 7
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint: None, None
+                        size: dp(300), self.parent.parent.height - dp(10)
+                        canvas.before:
+                            Color:
+                                rgb: utils.get_color_from_hex("#C1C1C1")
+                            RoundedRectangle:
+                                size: self.size[0]+dp(2), self.size[1]+dp(3)
+                                pos: self.pos[0]-dp(1), self.pos[1]-dp(1.5)
+                                radius: 7, 7, 7, 7
+                        canvas:
+                            Color:
+                                rgb: utils.get_color_from_hex("#ffffff")
+                            RoundedRectangle:
+                                size: self.size
+                                pos: self.pos
+                                radius: 7, 7, 7, 7
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint: None, None
+                        size: dp(300), self.parent.parent.height - dp(10)
+                        canvas.before:
+                            Color:
+                                rgb: utils.get_color_from_hex("#C1C1C1")
+                            RoundedRectangle:
+                                size: self.size[0]+dp(2), self.size[1]+dp(3)
+                                pos: self.pos[0]-dp(1), self.pos[1]-dp(1.5)
+                                radius: 7, 7, 7, 7
+                        canvas:
+                            Color:
+                                rgb: utils.get_color_from_hex("#ffffff")
+                            RoundedRectangle:
+                                size: self.size
+                                pos: self.pos
+                                radius: 7, 7, 7, 7
+
+        Label:
+            text: 'Suggested Surveys'
+            font_size: sp(12)
+            padding_x: dp(15)
+            size_hint: None, None
+            color: utils.get_color_from_hex("#000000")
+            size: self.texture_size
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: dp(7), dp(0), dp(7), dp(0)
+            size_hint_y: None
+            height: self.parent.height / 3
+            ScrollView:
+                do_scroll_x: False
+                BoxLayout:
+                    orientation: 'vertical'
+                    # size_hint_y: None
+                    # height: root.height // 3
+                    canvas.before:
+                        Color:
+                            rgb: utils.get_color_from_hex("#C1C1C1")
+                        RoundedRectangle:
+                            size: self.size[0]+dp(2), self.size[1]+dp(5)
+                            pos: self.pos[0]-dp(1), self.pos[1] - dp(2.5)
+                            radius: 7, 7, 0, 0
+                    canvas:
+                        Color:
+                            rgb: utils.get_color_from_hex("#ffffff")
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: 7, 7, 0, 0

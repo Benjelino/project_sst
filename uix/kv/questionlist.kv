@@ -1,0 +1,395 @@
+#:kivy 1.11
+<Rating>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: dp(60)
+    padding: 1
+    spacing: "16dp"
+    ImageButton:
+        id: rate_1
+        size_hint: None, None
+        size: dp(50), dp(50)
+        space:
+        source: "data/images/rate.png"
+
+    ImageButton:
+        id: rate_2
+        size_hint: None, None
+        size: dp(50), dp(50)
+        source: "data/images/rate.png"
+
+    ImageButton:
+        id: rate_3
+        size_hint: None, None
+        size: dp(50), dp(50)
+        source: "data/images/rate.png"
+
+    ImageButton:
+        id: rate_4
+        size_hint: None, None
+        size: dp(50), dp(50)
+        source: "data/images/rate.png"
+
+    ImageButton:
+        id: rate_5
+        size_hint: None, None
+        size: dp(50), dp(50)
+        source: "data/images/rate.png"
+
+
+<LikertCard>:
+    id: likert_card
+    orientation: "lr-tb"
+    size_hint_y: None
+    height: self.minimum_height
+    padding: "16dp"
+    spacing: "16dp"
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1.0
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: 10,10,10,10
+
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint_y: None
+        height: self.minimum_height
+        padding: 3
+        Label:
+            text: ''
+            font_size: '15sp'
+            text_size: self.size
+            size_hint: 0.03, 1
+            halign: 'left'
+            markup: True
+            color: 0,0,0,1
+        Label:
+            text: root.question
+            font_size: '15sp'
+            text_size: self.size
+            size_hint: 0.95, 1
+            halign: 'left'
+            markup: True
+            color: 0,0,0,1
+
+<OpenEnded>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: 45
+    padding: 1
+    BaseInput:
+        id:inp_idea
+        background_normal:'data/images/textinput_active.png'
+        background_active:'data/images/textinput_active.png'
+        background_disabled_normal:'data/images/textinput_disabled.png'
+        background_disabled_active:'data/images/textinput_disabled.png'
+        font_size: '18sp'
+        size_hint_y:None
+        height: self.minimum_height
+        disabled: True
+
+
+<Other>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: 25
+    padding: 1
+    SurvImage:
+        id: opt_remove
+        source: "data/images/checkmark.png"
+        size_hint: 0.1, 1
+    Label:
+        id: other_label
+        font_size: '15sp'
+        text_size: self.size
+        text: 'Other'
+        size_hint: 0.1, 1
+        color: 0,0,0,1
+        valign: 'center'
+        halign: 'left'
+    OtherInput:
+        id: answer
+        size_hint: 0.9, None
+        height: dp(20)
+        text: root.text
+        hint_text: " "
+        disabled: True
+
+<MultiOption>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: 25
+    padding: 1
+    SurvImage:
+        id: opt_remove
+        source: "data/images/checkmark.png"
+        size_hint: 0.1, 1
+    Label:
+        font_size: '15sp'
+        text_size: self.size
+        text: root.option
+        color: 0,0,0,1
+        valign: 'center'
+        halign: 'left'
+
+
+<OptionsCard>:
+    id: multiple_preview
+    orientation: "lr-tb"
+    size_hint_y: None
+    height: self.minimum_height
+    padding: "16dp"
+    spacing: "16dp"
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1.0
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: 10,10,10,10
+
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint_y: None
+        height: dp(30)
+        active: False
+        text: ''
+        Label:
+            text:''
+            font_size: '15sp'
+            text_size: self.size
+            size_hint: 0.8, 1
+            halign: 'left'
+            markup: True
+            color: 0,0,0,1
+        Button:
+            id: edit
+            size_hint: None, None
+            size: dp(40), dp(40)
+            background_normal: "data/images/but_edit.png"
+            background_down: "data/images/but_edit_down.png"
+            border: 15,15,15,15
+            on_release: app.on_edit(root.key); app.root.current = "create"
+        Label:
+            text:''
+            font_size: '15sp'
+            text_size: self.size
+            size_hint: 0.005, 1
+            halign: 'left'
+            markup: True
+            color: 0,0,0,1
+        Button:
+            id: delete
+            size_hint: None, None
+            size: dp(40), dp(40)
+            background_normal: "data/images/but_del.png"
+            background_down: "data/images/but_del_down.png"
+            border: 15,15,15,15
+            on_release:
+                app.del_optioncard(root.key)
+                root.dispatch('on_del_optioncard')
+
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint_y: None
+        height: self.minimum_height
+        padding: 3
+        Label:
+            text: root.key
+            font_size: '15sp'
+            text_size: self.size
+            size_hint: 0.03, 1
+            halign: 'left'
+            markup: True
+            color: 0,0,0,1
+        Label:
+            text: root.question
+            font_size: '15sp'
+            text_size: self.size
+            size_hint: 0.95, 1
+            halign: 'left'
+            markup: True
+            color: 0,0,0,1
+
+<TitleInput>:
+    text:''
+    hint_text: "Question"
+    orientation: "lr-tb"
+    size_hint_y: None
+    height: self.minimum_height
+    password: False
+    bg_color: (1,1,1,1)
+    highlight_color1: 0.498, 0.549, 0.552,1.0
+    highlight_color2: (0.2039,0.5961,0.8588,1)
+
+    canvas.before:
+        Color:
+            rgba: self.bg_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: 10,10,10,10
+
+    BaseInput:
+        text: root.text
+        id: the_text_input
+        hint_text: root.hint_text if not self.focused else ""
+        size_hint_y: None
+        height: dp(50)
+        padding: dp(8), dp(14)
+        bottom_color: root.highlight_color1
+        pos_hint: {"top": 1, "right": 1}
+        on_focus: root.dispatch('on_title_text')
+
+        canvas.before:
+            Color:
+                rgba: self.bottom_color if self.bottom_color else (0,0,0,1)
+            Rectangle:
+                size: (self.size[0], self.size[1]/15) if self.focused else (self.size[0], self.size[1]/20.)
+                pos: self.pos
+        on_focus:
+            self.bottom_color = root.highlight_color2 if self.focused else root.highlight_color1
+
+        on_text:
+            root.text = self.text
+<QuestionList>:
+    id: question_list
+    on_description: app.set_description(root.description)
+    on_title: app.set_title(root.title);
+
+    BoxLayout:
+        id: box
+        padding: dp(16), dp(16), dp(16), dp(0)
+        spacing: dp(8)
+        orientation: "vertical"
+        canvas:
+            Color:
+                rgb: utils.get_color_from_hex("#d4d3f2")
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        TitleInput:
+            text: root.title
+            id: title
+            hint_text: "Title"
+            size_hint: 1, None
+            height: dp(40)
+            on_title_text: root.title = self.text
+
+
+        TitleInput:
+            text: root.description
+            id: description
+            hint_text: "Description"
+            size_hint: 1, None
+            height: dp(40)
+            on_title_text: root.description = self.text
+
+        ScrollView:
+            do_scroll_x: False
+            size_hint: 1, None
+            height: self.parent.height - title.height - description.height - add_option.height - dp(20)
+            BoxLayout:
+                id: survey_grid
+                orientation: 'vertical'
+                spacing: dp(5)
+                size_hint_y: None
+                height: self.minimum_height
+                # row_default_height: '120dp'
+                # row_force_default: True
+
+        BoxLayout:
+            size_hint: 1, 0.1
+            padding: dp(16)
+            Button:
+                id: add_option
+                text: "Done"
+                size_hint: 0.2, None
+                height: dp(40)
+                background_normal: "data/images/addbtn.png"
+                background_down: "data/images/addab.png"
+                border: 15,15,15,15
+                on_release:
+                    app.check_done()
+
+
+
+
+
+            Label:
+                text: ''
+                size_hint: 0.65, None
+                height: add_option.height
+                padding: dp(16), dp(0)
+                color: 0.498, 0.549, 0.552,1.0
+                text_size: self.size
+                halign: "right"
+                valign: "middle"
+
+
+    Toast:
+        id:toast
+        width: min(root.width - dp(25), dp(250))
+        x:root.center_x - self.width // 2
+
+    SurvImage:
+        source: "data/images/add_survey.png"
+        size_hint: 0.2, 0.2
+        pos_hint: {'top': 0.18, 'x': 0.8}
+        on_release:
+            app.check_tnd()
+
+
+    GridLayout:
+        cols: 1
+        pos_hint: {'top': 0.415, 'right': 0.85}
+        size_hint_x: 0.3 if app.isShownMenu else 0
+        size_hint_y: 0.3 if app.isShownMenu else 0
+        opacity: 1 if app.isShownMenu else 0
+
+        SurvButton:
+            id: rating
+            text: 'Rating'
+            on_release:
+                app.root.ids['create_screen'].ids['sol_widget'].ids['option_type'].text = "Rating"
+                app.root.ids['create_screen'].ids['sol_widget'].ids['add_option'].opacity = 0
+                app.root.ids['create_screen'].ids['sol_widget'].ids['add_option'].disabled = True
+                app.root.ids['create_screen'].ids['sol_widget'].ids['other_box'].size_hint = 0, 0
+                app.root.ids['create_screen'].ids['sol_widget'].ids['other'].opacity = 0
+                app.root.current = "create"; app.isShownMenu = not app.isShownMenu
+        SurvButton:
+            id: open_ended
+            text: 'Open Ended'
+            on_release:
+                app.root.ids['create_screen'].ids['sol_widget'].ids['option_type'].text = "Open ended"
+                app.root.ids['create_screen'].ids['sol_widget'].ids['add_option'].opacity = 0
+                app.root.ids['create_screen'].ids['sol_widget'].ids['add_option'].disabled = True
+                app.root.ids['create_screen'].ids['sol_widget'].ids['other_box'].size_hint = 0, 0
+                app.root.ids['create_screen'].ids['sol_widget'].ids['other'].opacity = 0
+                app.root.current = "create"; app.isShownMenu = not app.isShownMenu
+
+        SurvButton:
+            id: likert_scale
+            text: 'Likert Scale'
+            on_release:
+                app.root.ids['create_screen'].ids['sol_widget'].ids['option_type'].text = "Likert scale"
+                app.hide_widget(app.root.ids['create_screen'].ids['sol_widget'])
+                app.hide_widget(app.root.ids['create_screen'].ids['likert_scale'], False)
+                app.root.ids['create_screen'].add_ans_question()
+                app.root.ids['create_screen'].add_likert_input()
+                app.root.current = "create"; app.isShownMenu = not app.isShownMenu
+
+        SurvButton:
+            id: single_answer
+            text: 'Single answer'
+            on_release:
+                app.root.ids['create_screen'].ids['sol_widget'].ids['option_type'].text = "Single answer"
+                app.root.current = "create"; app.isShownMenu = not app.isShownMenu
+        SurvButton:
+            id: multiple_choice
+            text: 'Multiple Choice'
+            on_release:
+                app.root.ids['create_screen'].ids['sol_widget'].ids['option_type'].text = "Multiple choice"
+                app.root.current = "create"; app.isShownMenu = not app.isShownMenu

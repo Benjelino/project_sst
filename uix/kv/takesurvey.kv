@@ -1,0 +1,390 @@
+#:kivy 1.11
+
+<FinishedCard>:
+    id: finished_card
+    orientation: "lr-tb"
+    size_hint_y: None
+    height: self.minimum_height
+    padding: "16dp"
+    spacing: "16dp"
+    pos_hint:{'top': 1, 'left': 1}
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1.0
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: 10,10,10,10
+
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint_y: None
+        height: self.minimum_height
+
+        Label:
+            text: 'Thank You!'
+            font_size: '25sp'
+            text_size: self.size
+            size_hint: 1, 1
+            halign: 'center'
+            markup: True
+            color: 0,0,0,1
+
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint_y: None
+        height: self.minimum_height
+
+        Label:
+            text: ''
+            size_hint: 0.35, None
+            height: add_option.height
+            padding: dp(16), dp(0)
+            color: 0.498, 0.549, 0.552,1.0
+            text_size: self.size
+            halign: "right"
+            valign: "middle"
+
+        Button:
+            id: add_option
+            text: "Take another survey"
+            size_hint: None, None
+            width: dp(200)
+            height: dp(40)
+            background_normal: "data/images/addbtn.png"
+            background_down: "data/images/addab.png"
+            border: 15,15,15,15
+            on_release:
+                app.root.ids.take_survey.remove_finish()
+                app.take_survey(app.index)
+
+        Label:
+            text: ''
+            size_hint: 0.35, None
+            height: add_option.height
+            padding: dp(16), dp(0)
+            color: 0.498, 0.549, 0.552,1.0
+            text_size: self.size
+            halign: "right"
+            valign: "middle"
+
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint_y: None
+        height: self.minimum_height
+        padding: 3
+        Label:
+            text: ''
+            size_hint: 0.35, None
+            height: add_option.height
+            padding: dp(16), dp(0)
+            color: 0.498, 0.549, 0.552,1.0
+            text_size: self.size
+            halign: "right"
+            valign: "middle"
+
+        Button:
+            id: add_option
+            text: "Return to Survey Screen"
+            size_hint: None, None
+            width: dp(200)
+            height: dp(40)
+            background_normal: "data/images/addbtn.png"
+            background_down: "data/images/addab.png"
+            border: 15,15,15,15
+            on_release:
+                app.root.ids.take_survey.remove_finish()
+                app.root.current = 'main'
+
+
+        Label:
+            text: ''
+            size_hint: 0.35, None
+            height: add_option.height
+            padding: dp(16), dp(0)
+            color: 0.498, 0.549, 0.552,1.0
+            text_size: self.size
+            halign: "right"
+            valign: "middle"
+
+<RatingCard>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: dp(60)
+    padding: 1
+    spacing: "16dp"
+    active: True
+    text: ''
+    ImageButton:
+        id: rate_1
+        size_hint: None, None
+        size: dp(50), dp(50)
+        source: "data/images/rate.png"
+        border: 15,15,15,15
+        on_release:
+            down = "data/images/rate_down.png"
+            up = "data/images/rate.png"
+            self.source, rate_2.source, rate_3.source, rate_4.source, rate_5.source = down, up, up, up, up
+            root.text = 'Poor'
+    ImageButton:
+        id: rate_2
+        size_hint: None, None
+        size: dp(50), dp(50)
+        source: "data/images/rate.png"
+        background_normal: "data/images/rate.png"
+        background_down: "data/images/rate_down.png"
+        border: 15,15,15,15
+        on_release:
+            down = "data/images/rate_down.png"
+            up = "data/images/rate.png"
+            self.source, rate_1.source, rate_3.source, rate_4.source, rate_5.source = down, down, up, up, up
+            root.text = 'Fair'
+    ImageButton:
+        id: rate_3
+        size_hint: None, None
+        size: dp(50), dp(50)
+        source: "data/images/rate.png"
+        background_normal: "data/images/rate.png"
+        background_down: "data/images/rate_down.png"
+        border: 15,15,15,15
+        on_release:
+            down = "data/images/rate_down.png"
+            up = "data/images/rate.png"
+            self.source, rate_1.source, rate_2.source, rate_4.source, rate_5.source = down, down, down, up, up
+            root.text = 'Good'
+    ImageButton:
+        id: rate_4
+        size_hint: None, None
+        size: dp(50), dp(50)
+        source: "data/images/rate.png"
+        background_normal: "data/images/rate.png"
+        background_down: "data/images/rate_down.png"
+        border: 15,15,15,15
+        on_release:
+            down = "data/images/rate_down.png"
+            up = "data/images/rate.png"
+            self.source, rate_1.source, rate_2.source, rate_3.source, rate_5.source = down, down, down, down, up
+            root.text = 'Very Good'
+    ImageButton:
+        id: rate_5
+        size_hint: None, None
+        size: dp(50), dp(50)
+        source: "data/images/rate.png"
+        background_normal: "data/images/rate.png"
+        background_down: "data/images/rate_down.png"
+        border: 15,15,15,15
+        on_release:
+            down = "data/images/rate_down.png"
+            up = "data/images/rate.png"
+            self.source, rate_1.source, rate_2.source, rate_3.source, rate_4.source = down, down, down, down, down
+            root.text = 'Excellent'
+
+
+<OtherCard>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: 25
+    padding: 1
+    check_other: check_other
+    active: check_other.active
+    text: answer.text
+    CheckBox:
+        id: check_other
+        group: root.group
+        text: root.option
+        size_hint_x: 0.05
+        active: False
+        on_active: print('yes')
+    Label:
+        id: other_label
+        font_size: '15sp'
+        text_size: self.size
+        text: 'Other'
+        size_hint: 0.1, 1
+        color: 0,0,0,1
+        valign: 'center'
+        halign: 'left'
+    OtherInput:
+        id: answer
+        size_hint: 0.9, None
+        height: dp(20)
+        text: root.text
+        hint_text: " "
+
+<OpenEndedCard>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: self.minimum_height
+    spacing: dp(5)
+    padding: 1
+    active: True
+    text: open_ended.text
+    BaseInput:
+        id: open_ended
+        background_normal:'data/images/textinput_disabled.png'
+        background_active:'data/images/textinput_active.png'
+        background_disabled_normal:'data/images/textinput_disabled.png'
+        background_disabled_active:'data/images/textinput_disabled.png'
+        font_size: '18sp'
+        size_hint_y:None
+        height: self.minimum_height
+
+<MultiOptionCard>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: 25
+    padding: 1
+    check: check
+    active: check.active
+    text: opt_label.text
+    CheckBox:
+        id: check
+        text: root.option
+        size_hint_x: 0.05
+        active: False
+        on_active: print('yes')
+    Label:
+        id: opt_label
+        font_size: '15sp'
+        text_size: self.size
+        text: root.option
+        color: 0,0,0,1
+        valign: 'center'
+        halign: 'left'
+
+<SingleOptionCard>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: 25
+    padding: 1
+    check: check
+    active: check.active
+    text: opt_label.text
+    group: opt_label.text
+    CheckBox:
+        id: check
+        group: root.group
+        text: root.option
+        size_hint_x: 0.05
+        active: False
+        on_active: app.root.ids.take_survey.carousel.load_next()
+    Label:
+        id: opt_label
+        font_size: '15sp'
+        text_size: self.size
+        text: root.option
+        color: 0,0,0,1
+        valign: 'center'
+        halign: 'left'
+
+<OptionsCards>:
+    id: multiple_preview
+    orientation: "lr-tb"
+    size_hint_y: None
+    height: self.minimum_height
+    padding: "16dp"
+    spacing: "16dp"
+    pos_hint:{'top':0.8, 'left': 1}
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1.0
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: 10,10,10,10
+
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint_y: None
+        height: self.minimum_height
+        padding: 3
+        active: False
+        text: ''
+        group: ''
+        Label:
+            text: root.key
+            font_size: '15sp'
+            text_size: self.size
+            size_hint: 0.03, 1
+            halign: 'left'
+            markup: True
+            color: 0,0,0,1
+        Label:
+            text: root.question
+            font_size: '15sp'
+            text_size: self.size
+            size_hint: 0.95, 1
+            halign: 'left'
+            markup: True
+            color: 0,0,0,1
+
+<TakeSurvey>:
+    id: take_survey
+    carousel: carousel
+    FloatLayout:
+        BoxLayout:
+            id: box
+            padding: dp(16), dp(16), dp(16), dp(0)
+            spacing: dp(8)
+            orientation: "vertical"
+            canvas:
+                Color:
+                    rgb: utils.get_color_from_hex("#d4d3f2")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            Carousel:
+                id: carousel
+                direction: 'bottom'
+                anim_move_duration: 1
+
+            # ScrollView:
+                #do_scroll_x: False
+                # size_hint: 1, None
+                # height: self.parent.height -  done.height
+                # BoxLayout:
+                    # id: survey_grid
+                    # orientation: 'vertical'
+                    # spacing: dp(5)
+                    # size_hint_y: None
+                    # height: self.minimum_height
+                    # row_default_height: '120dp'
+                    # row_force_default: True
+
+            BoxLayout:
+                size_hint: 1, 0.1
+                padding: dp(16)
+                Label:
+                    text: ''
+                    size_hint: 0.35, None
+                    height: done.height
+                    padding: dp(16), dp(0)
+                    color: 0.498, 0.549, 0.552,1.0
+                    text_size: self.size
+                    halign: "right"
+                    valign: "middle"
+                Button:
+                    id: done
+                    text: "Done"
+                    size_hint: None, None
+                    height: dp(40)
+                    width: dp(400)
+                    background_normal: "data/images/addbtn.png"
+                    background_down: "data/images/addab.png"
+                    border: 15,15,15,15
+                    on_release:
+                        root.check_something()
+                Label:
+                    text: ''
+                    size_hint: 0.35, None
+                    height: done.height
+                    padding: dp(16), dp(0)
+                    color: 0.498, 0.549, 0.552,1.0
+                    text_size: self.size
+                    halign: "right"
+                    valign: "middle"
+        Toast:
+            id:toast
+            width: min(root.width - dp(32), dp(400))
+            x:root.center_x - self.width // 2
